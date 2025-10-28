@@ -1,8 +1,7 @@
 # Beating the Worst Case -- Framework #
 
-This small framework serves as a starting point for the practical
-course _"Beating the Worst Case in Practice: Unerwartet effiziente
-Algorithmen"_.  As participant, you probably want to fork this
+This framework serves as a starting point for the practical
+course _"Beating the Worst Case in Practice: Unexpectedly Efficient Algorithms"_.  As a participant, you probably want to fork this
 repository. As the repository contains submodules, you want to clone it with the `--recurse` flag.
 
 ``` console
@@ -11,7 +10,7 @@ git clone --recurse git@link_to_your_repository
 
 The core of the framework is in [framework](framework/).
 The [ext_libs](ext_libs/) folder contains the [CLI11](https://github.com/CLIUtils/CLI11) library for parsing command line options and the [GIRG](https://github.com/chistopher/girgs) library for generating graphs.
-Unit test are located in [tests](tests/) and use [gtest](https://github.com/google/googletest).
+Unit test are located in [tests](tests/) and use [googletest](https://github.com/google/googletest).
 Moreover, [instances](./instances) includes some small instances for initial
 testing.  The folder [evaluation](./evaluation) contains example data and an [R script](https://en.wikipedia.org/wiki/R_(programming_language)) to visualize it.
 You can use this directory to creat your own plots.
@@ -28,6 +27,8 @@ If you don't want to use a Docker, you can build the project on your own using C
 ## Compiling and Running ##
 
 Compile with CMake:
+
+Create a directory (`debug` in this case) and navigate to it. Execute CMake to build the Makefile and run the Makefile with `make`
 
 ``` console
 mkdir debug
@@ -130,9 +131,9 @@ information on how to use it.
 
 ## Running Unit Tests ##
 
-[gtest](https://github.com/google/googletest) is already included in
+[googletest](https://github.com/google/googletest) is already included in
 the framework, providing easy unit testing.  If you already compiled
-the project, then running `make test` from the `debug` folder will
+the project, then running `make test` will
 run the unit tests and output whether the tests succeeded or failed.
 For an example of how to create test cases, see
 [graph_tests.cpp](test/graph_tests.cpp).
