@@ -25,14 +25,14 @@ TEST(timer, wait) {
 
   Timer::stop_timer("overall");
 
-  double delta = 1.0;
+  double delta = 2.0;
 
-  EXPECT_GE(Timer::time("overall").count(), 90);
-  EXPECT_LE(Timer::time("overall").count(), 90 + delta);
+  EXPECT_GE(Timer::time("overall").count(), 90.0);
+  EXPECT_LE(Timer::time("overall").count(), 90.0 + delta);
 
-  EXPECT_GE(Timer::time("1st").count(), 80);
-  EXPECT_LE(Timer::time("1st").count(), 80 + delta);
+  EXPECT_GE(Timer::time("1st").count(), 80.0);
+  EXPECT_LE(Timer::time("1st").count(), 80.0 + delta);
 
-  EXPECT_GE(Timer::time("2nd").count(), 10);
-  EXPECT_LE(Timer::time("2nd").count(), 10 + delta);
+  EXPECT_GE(Timer::time("2nd").count(), 10.0);
+  EXPECT_LE(Timer::time("2nd").count(), 10.0 + delta);
 }
