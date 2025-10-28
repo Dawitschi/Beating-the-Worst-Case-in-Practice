@@ -37,7 +37,7 @@ class Graph {
   const std::vector<node>& neighbors(node v) const;
 
   // Check if there is an edge between two nodes.
-  const bool has_edge(node u, node v) const;
+  bool has_edge(node u, node v) const;
 
   // The degree of a node.
   unsigned degree(node v) const;
