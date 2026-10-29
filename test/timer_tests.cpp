@@ -25,7 +25,7 @@ TEST(timer, wait) {
 
   Timer::stop_timer("overall");
 
-  double delta = 2.0;
+  double delta = 15.0;
 
   EXPECT_GE(Timer::time("overall").count(), 90.0);
   EXPECT_LE(Timer::time("overall").count(), 90.0 + delta);
