@@ -18,6 +18,7 @@ set(SOURCE_FILES
     src/component_structure.cpp
     src/timer.cpp
     src/random.cpp
+    src/bbfs.cpp
 )
 
 # create a library of the framework
