@@ -12,3 +12,7 @@ foreach (file ${EXECUTABLE_FILES})
     target_link_libraries(${executable} PRIVATE framework cli11)
 endforeach ()
 
+# Graph-only CSV generation for the R analysis.
+add_executable(graph_properties ../evaluation/graph_properties.cpp)
+target_link_libraries(graph_properties PRIVATE framework)
+
