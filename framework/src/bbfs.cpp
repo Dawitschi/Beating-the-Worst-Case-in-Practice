@@ -3,12 +3,15 @@
 #include <map>
 #include <vector>
 
-/*
-TODO: Descriptions for the algorithms
-TODOs: 
-    - More efficient visited logic 
-    - return all interesting things to save, like: How many nodes visited, distance of path
-*/
+// TODO: More efficient visited logic.
+
+// Find a shortest path in the unweighted graph using a FIFO queue. Discover
+// nodes in increasing distance from source and record each node's first parent.
+// Stop when target is dequeued, then follow parents from target back to source;
+// the returned path is therefore ordered target-to-source. If unreachable, the
+// path is empty. SearchResult records its length in nodes, queue removals as
+// expanded_nodes, and examined neighbor entries as examined_edges.
+// source and target must be valid node IDs in G.
 SearchResult bfs(const Graph& G, node source, node target) {
     SearchResult result;
 
@@ -50,7 +53,14 @@ SearchResult bfs(const Graph& G, node source, node target) {
     return result;
 }
 
-
+// Find a shortest path by searching from both endpoints, alternating complete
+// source and target BFS layers. Each side has its own visited set and parent
+// map. Stop when a newly discovered node has already been found by the other
+// side, then join the parent chains into a source-to-target path. If a search
+// frontier is exhausted without a meeting, return an empty path. SearchResult
+// counts nodes in the path and combines queue removals and examined neighbor
+// entries from both directions. This alternates layers without work balancing.
+// source and target must be valid node IDs in G.
 SearchResult bibfs(const Graph& G, node source, node target) {
     SearchResult result;
     std::queue<node> source_queue;
