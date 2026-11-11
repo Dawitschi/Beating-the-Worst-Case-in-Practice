@@ -8,6 +8,8 @@ set(HEADERS
     include/framework/component_structure.hpp
     include/framework/timer.hpp
     include/framework/random.hpp
+    include/framework/dominance.hpp
+    include/framework/dominance_with_diff_var.hpp
 )
 
 set(SOURCE_FILES
@@ -18,6 +20,8 @@ set(SOURCE_FILES
     src/component_structure.cpp
     src/timer.cpp
     src/random.cpp
+    src/dominance.cpp
+    src/dominance_with_diff_var.cpp
 )
 
 # create a library of the framework

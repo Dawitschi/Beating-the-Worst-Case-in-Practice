@@ -3,6 +3,8 @@ set(EXECUTABLE_FILES
     run.cpp
     convert_to_edgelist.cpp
     graph_generator.cpp
+    run_dominance.cpp
+    run_dominance_with_diff_var.cpp
 )
 
 foreach (file ${EXECUTABLE_FILES})
