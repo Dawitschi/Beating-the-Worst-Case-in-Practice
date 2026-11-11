@@ -5,6 +5,7 @@ set(EXECUTABLE_FILES
     graph_generator.cpp
     run_dominance.cpp
     run_dominance_with_diff_var.cpp
+    bbfs.cpp
 )
 
 foreach (file ${EXECUTABLE_FILES})
@@ -12,4 +13,8 @@ foreach (file ${EXECUTABLE_FILES})
     add_executable(${executable} ${file})
     target_link_libraries(${executable} PRIVATE framework cli11)
 endforeach ()
+
+# Graph-only CSV generation for the R analysis.
+add_executable(graph_properties ../evaluation/graph_properties.cpp)
+target_link_libraries(graph_properties PRIVATE framework)
 
