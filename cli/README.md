@@ -91,20 +91,20 @@ Run dominance reduction on every `.gr` file directly inside a directory, writing
 `dominance_log.csv` in the current working directory:
 
 ```console
-rtk proxy ./release/cli/run_dominance instances/graphs/
+./release/cli/run_dominance instances/graphs/
 ```
 
 For a single graph, results are printed to the console:
 
 ```console
-rtk proxy ./release/cli/run_dominance instances/graphs/1.gr
+ ./release/cli/run_dominance instances/graphs/1.gr
 ```
 
 Compare Array, Hash Table, and Sorted Lists implementations on a directory,
 writing `variants_log.csv` in the current working directory:
 
 ```console
-rtk proxy ./release/cli/run_dominance_with_diff_var instances/graphs/
+./release/cli/run_dominance_with_diff_var instances/graphs/
 ```
 
 Both batch commands overwrite their CSV. See
