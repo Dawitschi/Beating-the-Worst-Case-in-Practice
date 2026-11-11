@@ -89,7 +89,6 @@ Graph reduce_dominance_sorted(const Graph& G) {
     std::vector<unsigned> deg(n, 0);
     std::vector<std::vector<node>> sorted_adj(n);
 
-    // Grafı yüklerken tüm komşuluk listelerini küçükten büyüğe sıralıyoruz
     for (node v = 0; v < n; ++v) {
         sorted_adj[v] = G.neighbors(v);
         std::sort(sorted_adj[v].begin(), sorted_adj[v].end());
