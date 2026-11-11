@@ -28,3 +28,24 @@ Rscript example.R
 Two `.pdf`s should be created.
 For subsequent calls to the R script, you can comment the lines that install the libraries.
 For more information look at the [R script](evaluation/example.R).
+
+# Vertex Cover
+
+## Visualizations
+
+Dependencies:
+```bash
+pip install pandas matplotlib
+```
+
+Generate plots from generated logs:
+
+```bash
+# Dominance reduction with array implementation
+python plot.py
+
+# Dominance reduction with different variants
+python plot_var.py
+```
+
+---
