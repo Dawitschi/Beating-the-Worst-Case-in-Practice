@@ -4,5 +4,6 @@ debug
 release
 cmake-build-debug
 .vscode
+.DS_Store
 instances/
 

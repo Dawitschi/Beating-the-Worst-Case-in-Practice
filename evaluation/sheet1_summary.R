@@ -1,20 +1,12 @@
-# AI-generated to get a quick first look at the data and get to know R.
-# Run from the project root: Rscript evaluation/sheet1_summary.R
 # Exercise 2 asks for graphs with LITTLE OR NO ASYMPTOTIC SPEEDUP.
 # https://scale.iti.kit.edu/_media/teaching/2026ws/beating_wc/sheet1.pdf
 # This produces candidates from the current experiment, not proven classifications.
-# IMPORTANT: our current BBFS alternates layers. The sheet requests choosing the
-# direction by estimated layer work. Repeat the experiment with that variant
-# before treating the candidate list as a final answer.
 
 input_file <- "evaluation/bfs_results.csv"
 properties_file <- "evaluation/plots/graph-summary.csv"
 output_directory <- "evaluation/sheet1"
 
-# Same paired timing filter as bfs.R. Raw input CSVs are never changed.
 max_search_ms <- 10000
-# Exploratory split suggested by the gap in the current speedup plot.
-# A fixed threshold does NOT establish how speedup grows with graph size.
 low_speedup_threshold <- 10
 
 results <- read.csv(input_file)
@@ -25,6 +17,8 @@ results <- subset(results, algorithm %in% c("bfs", "bibfs"))
 if (anyDuplicated(results[c("graph", "source", "target", "algorithm")])) {
   stop("Duplicate algorithm/node-pair measurements")
 }
+
+
 paired <- merge(subset(results, algorithm == "bfs"),
                 subset(results, algorithm == "bibfs"),
                 by = c("graph", "source", "target"), suffixes = c("_bfs", "_bbfs"))
@@ -103,7 +97,6 @@ ranking <- ranking[c("graph", "assessment", "time_speedup", "work_speedup",
                      "average_degree", "max_degree", "heterogeneity", "estimated_locality",
                      "low_speedup_threshold", "timing_cutoff_ms", "implementation")]
 candidates <- ranking$graph[ranking$assessment == "low_measured_speedup_candidate"]
-# Numeric ordering for 0.gr, 1.gr, ..., rather than 0.gr, 1.gr, 10.gr, ... .
 ids <- suppressWarnings(as.numeric(tools::file_path_sans_ext(basename(candidates))))
 candidates <- candidates[order(ids, candidates, na.last = TRUE)]
 
