@@ -11,9 +11,11 @@ set(HEADERS
     include/framework/bbfs.hpp
     include/framework/dominance.hpp
     include/framework/dominance_with_diff_var.hpp
+    include/framework/locality.hpp
 )
 
 set(SOURCE_FILES
+    src/coreCentrality.cpp
     src/graph.cpp
     src/graph_parser.cpp
     src/graph_writer.cpp
