@@ -44,10 +44,10 @@ int main(int argc, char** argv) {
             throw std::runtime_error("Could not open output CSV");
         }
 
-        std::vector<CoreCentrality*> locality;
+        std::vector<Density*> locality;
 
         //TODO build all locality classes
-        auto *c = new CoreCentrality();
+        auto *c = new Density();
 
         locality.push_back(c);
         file << std::setprecision(12);
@@ -65,6 +65,10 @@ int main(int argc, char** argv) {
             const std::string graph_name =
                 graph_file.lexically_relative(
                     fs::path(graph_directory)).generic_string();
+
+            std::cout << "[" << index + 1 << "/" << graphs.size()
+                      << "] " << graph_file.filename().string()
+                      << std::endl;
 
             std::string graph_csv = "\"";
             for (char c : graph_name) {

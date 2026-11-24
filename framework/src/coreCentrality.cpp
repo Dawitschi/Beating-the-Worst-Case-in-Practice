@@ -1,9 +1,10 @@
 #include "framework/locality.hpp"
 
-double CoreCentrality::computeLocality(const Graph &G) {
-        return 1.0;
+//Computes the density of a graph. We would assume that a graph is more local, if it has a higher density
+double Density::computeLocality(const Graph &G, const unsigned sampleNodes) {
+        return G.n() / G.m();
 }
 
-std::string CoreCentrality::localityName(){
-        return "Example for Centrality measure";
+std::string Density::localityName(){
+        return "Density";
 }
