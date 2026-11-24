@@ -1,6 +1,6 @@
 #include "framework/locality.hpp"
 
-double CoreCentrality::computeLocality(const Graph &G) {
+double CoreCentrality::computeLocality(const Graph &G,  unsigned sampleNodes) {
         return 1.0;
 }
 
