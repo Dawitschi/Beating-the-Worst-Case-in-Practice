@@ -16,6 +16,7 @@ std::string ClosenessLocality::localityName() {
  * indicates how close a vertex is to all other vertex in the graph.
  * Here, we sample same vertices and only consider the distance between these vertices.
  * To get a value for the whole graph, we divide by the number of sampled vertices.
+ * (source: https://arxiv.org/pdf/cs/0009005)
 */
 double ClosenessLocality::computeLocality(const Graph &G, unsigned sampleNodes, unsigned seed) {
     std::vector<node> sampled(G.n());
@@ -29,14 +30,16 @@ double ClosenessLocality::computeLocality(const Graph &G, unsigned sampleNodes, 
     }
     //sample now contains all nodes of interest
     sampled.resize(sampleNodes);
+    const double k = sampled.size();
+    double n = G.n();
     double summedClosenessCentrality = 0.0;
-    unsigned distance;
+    double distance;
     for (node root : sampled) {
         distance = 0;
         for (node target : sampled) {
-            distance =+ bibfs(G,root,target).path_length;
+            distance += (G.n()*bibfs(G,root,target).path_length)/(k*(n-1));
         }
-        summedClosenessCentrality =+ (G.n()-1)/distance;
+        summedClosenessCentrality += 1/distance;
     }
     return summedClosenessCentrality/sampleNodes;
 }

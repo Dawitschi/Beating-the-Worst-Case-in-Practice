@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
                    "Number of distinct nodes sampled per graph")
             ->required()
             ->check(CLI::Range(2u, 1000000000u));
+
     app.add_option("--seed", seed, "Random seed");
 
 
@@ -52,16 +53,20 @@ int main(int argc, char **argv) {
             throw std::runtime_error("Could not open output CSV");
         }
 
-        std::vector<Density *> locality;
+        std::vector<Locality *> locality;
 
         //TODO build all locality classes
         auto *c = new Density();
-
         locality.push_back(c);
+
+        auto *closeness = new ClosenessLocality();
+       locality.push_back(closeness);
+
         file << std::setprecision(12);
         file << "graph,graph_nodes,graph_edges,"
-                "localityMeasure, locality\n";
+                "localityMeasure, locality,number_of_nodes\n";
 
+        std::cout << "Now starting to calculate..."<< std::endl;
         for (auto &loc: locality) {
             for (std::size_t index = 0; index < graphs.size(); ++index) {
                 // Load the graph
@@ -94,8 +99,9 @@ int main(int argc, char **argv) {
                 file << graph_csv
                         << "," << G.n()
                         << "," << G.m()
-                        << "," << c->localityName()
-                        << "," << c->computeLocality(G,count, 0)
+                        << "," << loc->localityName()
+                        << "," << loc->computeLocality(G,count, seed)
+                        << "," << count
                         << ",\n";
 
                 if (!file) {
