@@ -15,7 +15,7 @@ set(HEADERS
 )
 
 set(SOURCE_FILES
-    src/coreCentrality.cpp
+        src/density_Locality.cpp
     src/graph.cpp
     src/graph_parser.cpp
     src/graph_writer.cpp
@@ -26,6 +26,7 @@ set(SOURCE_FILES
     src/dominance.cpp
     src/dominance_with_diff_var.cpp
     src/bbfs.cpp
+        src/ClosenessCentrality.cpp
 )
 
 # create a library of the framework

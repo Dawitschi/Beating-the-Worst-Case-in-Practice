@@ -6,18 +6,21 @@
 class Locality {
 public:
     virtual ~Locality() = default;
-    virtual double computeLocality(const Graph& G, unsigned sampleNodes) = 0;
+    virtual double computeLocality(const Graph& G, unsigned sampleNodes, unsigned seed) = 0;
     virtual std::string localityName() = 0;
 };
 
 class Density : public Locality {
     public:
-<<<<<<< HEAD
     ~Density() override = default;
-=======
-    ~CoreCentrality() override = default;
->>>>>>> locality-setup
-    double computeLocality(const Graph &G,  unsigned sampleNodes) override ;
+    double computeLocality(const Graph &G, unsigned sampleNodes, unsigned seed) override;
+    std::string localityName() override;
+};
+
+class ClosenessLocality : public Locality {
+public:
+    ~ClosenessLocality() override = default;
+    double computeLocality(const Graph &G, unsigned sampleNodes, unsigned seed) override;
     std::string localityName() override;
 };
 

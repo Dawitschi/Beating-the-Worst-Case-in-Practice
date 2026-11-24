@@ -10,8 +10,9 @@ int main(int argc, char **argv) {
     CLI::App app{"Locality options"};
 
     std::string graph_directory;
-    std::string output_file = "test.csv";
+    std::string output_file = "instances/locality/locality.csv";
     unsigned sample_count = 0;
+    std::uint32_t seed = 42;
 
     app.add_option("graph_directory", graph_directory,
                    "Directory containing .gr graph files")
@@ -24,6 +25,8 @@ int main(int argc, char **argv) {
                    "Number of distinct nodes sampled per graph")
             ->required()
             ->check(CLI::Range(2u, 1000000000u));
+    app.add_option("--seed", seed, "Random seed");
+
 
     CLI11_PARSE(app, argc, argv);
 
@@ -49,10 +52,10 @@ int main(int argc, char **argv) {
             throw std::runtime_error("Could not open output CSV");
         }
 
-        std::vector<CoreCentrality *> locality;
+        std::vector<Density *> locality;
 
         //TODO build all locality classes
-        auto *c = new CoreCentrality();
+        auto *c = new Density();
 
         locality.push_back(c);
         file << std::setprecision(12);
@@ -92,7 +95,7 @@ int main(int argc, char **argv) {
                         << "," << G.n()
                         << "," << G.m()
                         << "," << c->localityName()
-                        << "," << c->computeLocality(G,count)
+                        << "," << c->computeLocality(G,count, 0)
                         << ",\n";
 
                 if (!file) {
