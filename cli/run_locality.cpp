@@ -6,7 +6,7 @@
 #include "framework/graph.hpp"
 namespace fs = std::filesystem;
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     CLI::App app{"Locality options"};
 
     std::string graph_directory;
@@ -15,17 +15,22 @@ int main(int argc, char** argv) {
 
     app.add_option("graph_directory", graph_directory,
                    "Directory containing .gr graph files")
-        ->required()
-        ->check(CLI::ExistingDirectory);
+            ->required()
+            ->check(CLI::ExistingDirectory);
 
     app.add_option("-o,--output", output_file, "Output CSV filename");
+
+    app.add_option("-n,--nodes", sample_count,
+                   "Number of distinct nodes sampled per graph")
+            ->required()
+            ->check(CLI::Range(2u, 1000000000u));
 
     CLI11_PARSE(app, argc, argv);
 
     try {
         std::vector<fs::path> graphs;
 
-        for (const auto& entry :
+        for (const auto &entry:
              fs::recursive_directory_iterator(graph_directory)) {
             if (entry.is_regular_file() &&
                 entry.path().extension() == ".gr") {
@@ -44,27 +49,33 @@ int main(int argc, char** argv) {
             throw std::runtime_error("Could not open output CSV");
         }
 
-        std::vector<Density*> locality;
+        std::vector<CoreCentrality *> locality;
 
         //TODO build all locality classes
-        auto *c = new Density();
+        auto *c = new CoreCentrality();
 
         locality.push_back(c);
         file << std::setprecision(12);
         file << "graph,graph_nodes,graph_edges,"
                 "localityMeasure, locality\n";
-        
-        for(auto &loc: locality){
-        for (std::size_t index = 0; index < graphs.size(); ++index) {
-            std::uint32_t seed = 42;
-            // Load the graph
-            const fs::path& graph_file = graphs[index];
-            Graph G(graph_file);
 
+        for (auto &loc: locality) {
+            for (std::size_t index = 0; index < graphs.size(); ++index) {
+                // Load the graph
+                const fs::path &graph_file = graphs[index];
+                Graph G(graph_file);
 
-            const std::string graph_name =
-                graph_file.lexically_relative(
-                    fs::path(graph_directory)).generic_string();
+                // provides the number of nodes to samplte  for approximation algos
+                const std::size_t count =
+                        std::min<std::size_t>(sample_count, G.n());
+
+                if (count < 2) {
+                    std::cerr << "Skipping: fewer than two nodes\n";
+                    continue;
+                }
+                const std::string graph_name =
+                        graph_file.lexically_relative(
+                            fs::path(graph_directory)).generic_string();
 
             std::cout << "[" << index + 1 << "/" << graphs.size()
                       << "] " << graph_file.filename().string()
@@ -77,21 +88,21 @@ int main(int argc, char** argv) {
             }
             graph_csv += '"';
 
-            file << graph_csv
-                 << "," << G.n()
-                 << "," << G.m()
-                 << "," << c->localityName()
-                 << "," << c->computeLocality(G)
-                 <<",\n";
+                file << graph_csv
+                        << "," << G.n()
+                        << "," << G.m()
+                        << "," << c->localityName()
+                        << "," << c->computeLocality(G,count)
+                        << ",\n";
 
-            if (!file) {
+                if (!file) {
                     throw std::runtime_error("CSV write failed");
+                }
+                file.flush();
+                if (!file) {
+                    throw std::runtime_error("CSV flush failed");
+                }
             }
-            file.flush();
-            if (!file) {
-                throw std::runtime_error("CSV flush failed");
-            }
-             }
         }
 
         file.close();
@@ -99,10 +110,9 @@ int main(int argc, char** argv) {
             throw std::runtime_error("Could not finish writing CSV");
         }
         std::cout << "Results saved to " << output_file << "\n";
-
-    }catch(const std::exception& error) {
+    } catch (const std::exception &error) {
         std::cerr << "Experiment failed: " << error.what() << "\n";
         return 1;
     }
     return 0;
- }
+}

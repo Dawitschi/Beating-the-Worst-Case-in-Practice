@@ -6,4 +6,5 @@ cmake-build-debug
 .vscode
 .DS_Store
 instances/
+.idea
 

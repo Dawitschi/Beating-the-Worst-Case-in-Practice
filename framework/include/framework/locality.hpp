@@ -12,7 +12,11 @@ public:
 
 class Density : public Locality {
     public:
+<<<<<<< HEAD
     ~Density() override = default;
+=======
+    ~CoreCentrality() override = default;
+>>>>>>> locality-setup
     double computeLocality(const Graph &G,  unsigned sampleNodes) override ;
     std::string localityName() override;
 };
