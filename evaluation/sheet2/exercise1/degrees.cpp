@@ -32,7 +32,7 @@ int main() {
         std::ofstream out(temporary_file);
         if (!out) throw std::runtime_error("Cannot open output CSV");
         out << std::setprecision(15);
-        out << "graph, seed, degrees\n";
+        out << "graph, seed, degrees, secondDegrees\n";
 
         const unsigned seed = 42;
         std::mt19937 rng(seed);
@@ -50,16 +50,28 @@ int main() {
             std::uniform_int_distribution<node> pick_node(0, G.n() - 1);
             std::unordered_set<node> seen;
 
+            std::vector<node> degree; 
+            std::vector<node> secondDegree; 
+
             while (seen.size() < sample_count) {
                 const node v = pick_node(rng);
                 if (seen.insert(v).second) {
-                    if (seen.size() > 0) {
-                        out << ' ';
+                    degree.push_back(G.neighbors(v).size());
+                    unsigned sum = 0; 
+                    for (node neighbour : G.neighbors(v)) {
+                        sum += G.neighbors(neighbour).size();
                     }
-                    out << G.neighbors(v).size();
+                    secondDegree.push_back(sum);
                 }
             }
 
+            for (unsigned n : degree) {
+                out << n << ' ';
+            }
+            out << "\",\"";
+            for (node n : secondDegree) {
+                out << n << ' ';
+            }
             out << "\"\n";
             std::cout << (i + 1) << '/' << files.size() << " graphs" << std::endl;
         }
