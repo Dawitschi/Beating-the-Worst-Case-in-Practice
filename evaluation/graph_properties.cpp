@@ -1,4 +1,3 @@
-// AI-generated to get a quick first look at the graph data and get to know R.
 // Uses the framework's Graph for loading, degrees, neighbors and edge lookup.
 #include "framework/graph.hpp"
 #include "framework/component_structure.hpp"

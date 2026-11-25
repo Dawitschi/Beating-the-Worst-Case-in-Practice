@@ -18,3 +18,6 @@ endforeach ()
 add_executable(graph_properties ../evaluation/graph_properties.cpp)
 target_link_libraries(graph_properties PRIVATE framework)
 
+add_executable(degrees ../evaluation/sheet2/exercise1/degrees.cpp)
+target_link_libraries(degrees PRIVATE framework)
+
