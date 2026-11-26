@@ -1,4 +1,4 @@
-graph,graph_nodes,graph_edges,localityMeasure, locality,number_of_nodes
+graph,graph_nodes,graph_edges,localityMeasure, locality,number_of_nodes,
 "0.gr",128000,1411808,Density,0.0906638863075,10,
 "1.gr",31978,306465,Density,0.104344704942,10,
 "10.gr",127953,1168615,Density,0.10949114978,10,
